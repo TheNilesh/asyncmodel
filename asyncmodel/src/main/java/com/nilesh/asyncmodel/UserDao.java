@@ -3,6 +3,11 @@ package com.nilesh.asyncmodel;
 public class UserDao {
 
 	public void insert(User user) {
-		//TODO:Insert
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

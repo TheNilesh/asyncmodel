@@ -29,18 +29,25 @@ public class MainApp {
 	}
 
 	public static void testUserService(UserService userService) {
-		System.out.println("Before starting " + System.currentTimeMillis());
+		
+		long timeBefore = System.currentTimeMillis();
 		userService.init();
-		System.out.println("Before insert " + System.currentTimeMillis());
+		long timeAfter = System.currentTimeMillis();
+		System.out.println("Time to init " + (timeAfter - timeBefore));
+		
+		timeBefore = System.currentTimeMillis();
 		insertFakeUsers(userService);
-		System.out.println("After insert " + System.currentTimeMillis());
+		timeAfter = System.currentTimeMillis();
+		System.out.println("Time to insert " + (timeAfter - timeBefore));
+		
+		timeBefore = System.currentTimeMillis();
 		userService.close();
-		System.out.println("After Close " + System.currentTimeMillis());
-	
+		timeAfter = System.currentTimeMillis();
+		System.out.println("Time to close " + (timeAfter - timeBefore));
 	}
 	
 	public static void insertFakeUsers(UserService userService) {
-		for (int i=0; i<1000; i++) {
+		for (int i=0; i<100; i++) {
 			User user = createFakeUser();
 			userService.insertUser(user);
 		}
