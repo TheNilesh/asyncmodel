@@ -41,7 +41,7 @@ This way I can just create a new Thread per request and submit it to executor.
 	public class Worker implements Runnable { //10 such threads of workers
 		public void run() {
 			while(true) {
-				User user = queue.poll(); // Call blocks if queue is empty
+				User user = queue.poll(); // returns null if queue is empty
 				if (null != user) {
 					new UserDao().insert(user);
 				}
