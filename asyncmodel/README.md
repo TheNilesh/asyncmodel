@@ -2,19 +2,21 @@
 
 During developing of REST API, I was supposed to insert new records into database in background and return **202 Accepted** to client. I found 3 ways by which I can solve this asynchronously. I want to find the best one...?
 
-1. Using executors
+1. Using executors as queue
 
+```
     executor.submit(new Runnable () { //threadpool of size 10
 			public void run() {
 				new UserDao().insert(user);
 			}
 		 });
 	return "202 Accepted";
+```
 		 
 This way I can just create a new Thread per request and submit it to executor.
 
 2. Using BlockingQueue
-
+```
 	queue.put(user);
 	return "202 Accepted";
 	
@@ -26,13 +28,13 @@ This way I can just create a new Thread per request and submit it to executor.
 			}
 		}
 	}
-	
+```	
  - Producer threads will be inserting new items into queue.
  - Worker(Consumer) threads will be removing from queue.
 
 	
 3. Using normal queue (ArrayDeque)
-
+```
 	queue.put(user);
 	return "202 Accepted";
 	
@@ -46,6 +48,6 @@ This way I can just create a new Thread per request and submit it to executor.
 			}
 		}
 	}
-	
+```	
  - Producer threads will be inserting new items into queue.
  - Worker(Consumer) threads will be removing from this queue.
